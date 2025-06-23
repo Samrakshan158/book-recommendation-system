@@ -1,7 +1,8 @@
 const token = localStorage.getItem('token');
+const BASE_URL = 'https://your-backend-api.com'; // Replace this with backend URL
 
 async function getUserRole() {
-  const res = await fetch('/api/me', {
+  const res = await fetch(`${BASE_URL}/api/me`, {
     headers: { Authorization: `Bearer ${token}` }
   });
   if (!res.ok) return null;
@@ -23,7 +24,7 @@ async function initAdmin() {
 }
 
 function loadUsers() {
-  fetch('/api/users', {
+  fetch(`${BASE_URL}/api/users`, {
     headers: { Authorization: `Bearer ${token}` }
   })
   .then(res => res.json())
@@ -45,7 +46,7 @@ function loadUsers() {
 }
 
 function loadBooks() {
-  fetch('/api/books', {
+  fetch(`${BASE_URL}/api/books`, {
     headers: { Authorization: `Bearer ${token}` }
   })
   .then(res => res.json())
@@ -68,19 +69,19 @@ function loadBooks() {
 }
 
 function promote(userId) {
-  fetch(`/api/users/${userId}/promote`, {
+  fetch(`${BASE_URL}/api/users/${userId}/promote`, {
     method: 'PATCH',
     headers: { Authorization: `Bearer ${token}` }
   }).then(loadUsers);
 }
 
 function editBook(bookId) {
-  alert(`Edit Book ${bookId} – functionality pending.`);
+  alert(`Edit Book ${bookId} functionality pending.`);
 }
 
 function deleteBook(bookId) {
   if (!confirm('Delete this book?')) return;
-  fetch(`/api/books/${bookId}`, {
+  fetch(`${BASE_URL}/api/books/${bookId}`, {
     method: 'DELETE',
     headers: { Authorization: `Bearer ${token}` }
   }).then(loadBooks);

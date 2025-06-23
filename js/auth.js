@@ -1,6 +1,6 @@
 // js/auth.js
 
-// Replace this with your actual backend URL
+// Replace this with backend URL
 const BASE_URL = 'https://your-backend-api.com';
 
 // Login Form Submission

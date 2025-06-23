@@ -1,4 +1,5 @@
 // js/logout.js
+const BASE_URL = 'https://your-backend-api.com';
 
 document.addEventListener("DOMContentLoaded", () => {
     const token = localStorage.getItem("token");
@@ -22,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Hide Admin link if not an admin
     if (adminLink && isLoggedIn) {
-        fetch('/api/me', {
+        fetch(`${BASE_URL}/api/me`, {
             headers: { Authorization: `Bearer ${token}` }
         })
         .then(res => res.ok ? res.json() : null)
@@ -37,7 +38,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-// Logout function
 function logout() {
     localStorage.removeItem("token");
     window.location.href = "login.html";
