@@ -22,7 +22,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (userFilters) userFilters.style.display = isLoggedIn ? "flex" : "none";
 
     // Hide Admin link if not an admin
-    if (adminLink && isLoggedIn) {
+    if (adminLink) {
+    if (isLoggedIn && token) {
         fetch(`${BASE_URL}/api/me`, {
             headers: { Authorization: `Bearer ${token}` }
         })
@@ -32,10 +33,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 adminLink.remove();
             }
         })
-        .catch(() => adminLink.remove());
-    } else if (adminLink) {
+        .catch(() => adminLink.remove()); // Handles invalid/expired token, etc.
+    } else {
+        // Not logged in or missing token
         adminLink.remove();
     }
+}
+
 });
 
 function logout() {
