@@ -1,4 +1,4 @@
-import { useState } from "react";
+import '../css/hero.css';
 
 export default function Hero({  searchInput, setSearchInput, genreFilter, setGenreFilter }) {
   // Handle Enter key press in input
@@ -12,7 +12,7 @@ export default function Hero({  searchInput, setSearchInput, genreFilter, setGen
     <div className="hero-container">
       <div className="hero-text">
         <h2 className="hero-title">Welcome to the Book Recommender</h2>
-        <p className="hero-description">Your personalized book recommendations await!</p>
+        <p className="hero-description">Search your favorite book and bookmark it!</p>
         <p className="hero-description">
           Discover new genres, find your next favorite book, and explore a world of
           literature tailored just for you.
@@ -35,19 +35,6 @@ export default function Hero({  searchInput, setSearchInput, genreFilter, setGen
           <option value="Romance">Romance</option>
           <option value="Thriller">Thriller</option>
         </select>
-      </div>
-
-      {/* Optional: render search results */}
-      <div className="results-container">
-        {results.length > 0 && (
-          <ul>
-            {results.map((book) => (
-              <li key={book.id}>
-                {book.volumeInfo.title} by {book.volumeInfo.authors?.join(', ') ?? "Unknown"}
-              </li>
-            ))}
-          </ul>
-        )}
       </div>
     </div>
   );
