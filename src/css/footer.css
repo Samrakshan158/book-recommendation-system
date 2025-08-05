@@ -1,11 +1,10 @@
 footer {
+    width: 100%;
     padding: 3rem;
     padding-top: 1rem;
     padding-bottom: 1rem;
     background-color: #161b22;
     color: var(--color);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 1rem;
+    position: fixed;
+    bottom: 0;
 }
