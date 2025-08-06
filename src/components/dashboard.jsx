@@ -1,14 +1,12 @@
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import '../css/dashboard.css';
 
 export default function Dashboard({ searchInput, genreFilter, BASE_URL }) {
     const [books, setBooks] = useState([]);
+    const [startIndex, setStartIndex] = useState(0);
+    const maxResults = 10;
     const navigate = useNavigate();
-
-    const displayBooks = (fetchedBooks) => {
-        setBooks(fetchedBooks);
-    };
 
     useEffect(() => {
         const fetchRecommendations = async () => {
@@ -19,26 +17,23 @@ export default function Dashboard({ searchInput, genreFilter, BASE_URL }) {
                 if (!searchInput && !genreFilter) {
                     query = "subject:fiction"; // fallback
                 } else {
-                    if (searchInput) query += encodeURIComponent(searchInput);
+                    if (searchInput) query += `intitle:${encodeURIComponent(searchInput)}`;
                     if (genreFilter) query += `+subject:${encodeURIComponent(genreFilter)}`;
                 }
 
-                // Add startIndex and maxResults for pagination/randomness
-                const startIndex = Math.floor(Math.random() * 100); // optional
-                const url = `${BASE_URL}${query}&startIndex=${startIndex}&maxResults=10`;
-
+                const url = `${BASE_URL}${query}&startIndex=${startIndex}&maxResults=${maxResults}`;
                 const response = await fetch(url);
                 if (!response.ok) throw new Error("Network error");
 
                 const data = await response.json();
-                displayBooks(data.items || []);
+                setBooks(data.items || []);
             } catch (error) {
                 console.error("Error fetching books:", error);
             }
         };
 
         fetchRecommendations();
-    }, [searchInput, genreFilter, BASE_URL]);
+    }, [searchInput, genreFilter, BASE_URL, startIndex]);
 
     return (
         <section className="dashboard-section">
@@ -67,6 +62,15 @@ export default function Dashboard({ searchInput, genreFilter, BASE_URL }) {
                 ) : (
                     <p>Loading books...</p>
                 )}
+            </div>
+
+            <div className="pagination-controls">
+                <button onClick={() => setStartIndex(Math.max(0, startIndex - maxResults))} disabled={startIndex === 0}>
+                    ◀ Previous
+                </button>
+                <button onClick={() => setStartIndex(startIndex + maxResults)} disabled={books.length < maxResults}>
+                    Next ▶
+                </button>
             </div>
         </section>
     );

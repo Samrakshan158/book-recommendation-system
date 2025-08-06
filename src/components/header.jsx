@@ -9,7 +9,7 @@ export default function Header() {
 
                 <ul className="navbar-nav">
                     <li><Link to="/" className="navbar-item">Home</Link></li>
-                    <li><Link to="favorites" className="navbar-item">Bookmarks</Link></li>
+                    {/* <li><Link to="favorites" className="navbar-item">Bookmarks</Link></li> */}
                 </ul>
             </nav>
         </header>
