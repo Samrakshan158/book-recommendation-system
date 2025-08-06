@@ -5,6 +5,4 @@ footer {
     padding-bottom: 1rem;
     background-color: #161b22;
     color: var(--color);
-    position: fixed;
-    bottom: 0;
 }
